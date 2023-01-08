@@ -88,10 +88,19 @@ var upperCasedCharacters = [
   'Z'
 ];
 
+var mixer = {
+  mixedSpecialCharacters: specialCharacters.sort(() => .5 - Math.random()),
+  mixednumericCharacters: numericCharacters.sort(() => .5 - Math.random()),
+  mixedlowerCasedCharacters: lowerCasedCharacters.sort(() => .5 - Math.random()),
+  mixedupperCasedCharacters: upperCasedCharacters.sort(() => .5 - Math.random()),
+};
+
+
+
 // Object with all user options.
 var passOpt = {
   // Global scope object1 for how many characters user wants in his password
-  howManyChars: null,
+  howManyChars: 10,
   //Global scope object does user wants include special characters
   specialChars: null,
   // Global scope variable does user wants include numeric characters
@@ -111,6 +120,7 @@ var getPasswordOptions = function () {
   // Validation how many characters input
   if (howMany < 10 || howMany > 64) {
     alert("Please choose password character between 10 and 64");
+    return;
   } else {
     passOpt.howManyChars = howMany;
   };
@@ -164,15 +174,36 @@ var getPasswordOptions = function () {
     };
   };
 };
+var result = [];
+
 
 // Function for getting a random element from an array
 function getRandom(arr) {
 
-}
+  if (passOpt.specialChars) {
+    result = result.concat(specialCharacters);
+  };
+
+  if (passOpt.numChars) {
+    result = result.concat(numericCharacters);
+  };
+
+  if(passOpt.lowercaseChars) {
+    result = result.concat(lowerCasedCharacters);
+  };
+
+  if(passOpt.uppercaseChars) {
+    result = result.concat(upperCasedCharacters);
+  };
+
+  var string = result.sort(() => .5 - Math.random()).splice(1, arr);
+  return string.join("");
+};
 
 // Function to generate password with user input
 function generatePassword() {
   getPasswordOptions();
+  return getRandom(passOpt.howManyChars);
 }
 
 // Get references to the #generate element
