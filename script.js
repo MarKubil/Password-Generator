@@ -88,14 +88,6 @@ var upperCasedCharacters = [
   'Z'
 ];
 
-var mixer = {
-  mixedSpecialCharacters: specialCharacters.sort(() => .5 - Math.random()),
-  mixednumericCharacters: numericCharacters.sort(() => .5 - Math.random()),
-  mixedlowerCasedCharacters: lowerCasedCharacters.sort(() => .5 - Math.random()),
-  mixedupperCasedCharacters: upperCasedCharacters.sort(() => .5 - Math.random()),
-};
-
-
 
 // Object with all user options.
 var passOpt = {
@@ -174,31 +166,36 @@ var getPasswordOptions = function () {
     };
   };
 };
-var result = [];
 
+var result = [];
+var arrayLength = result.join(numericCharacters + "" + result);
 
 // Function for getting a random element from an array
 function getRandom(arr) {
+  // Array to keep user option array elements
+ 
+  // Validation what user wants.
 
-  if (passOpt.specialChars) {
-    result = result.concat(specialCharacters);
-  };
+  do {
+    if (passOpt.specialChars) {
+      result = result.concat(specialCharacters);
+    };
+    if (passOpt.numChars) {
+      result = [...result, ...numericCharacters];
+    };
+    if (passOpt.lowercaseChars) {
+      result = result.concat(lowerCasedCharacters);
+    };
+    if (passOpt.uppercaseChars) {
+      result = result.concat(upperCasedCharacters);
+    };
+  } while (arr <= result.length);
 
-  if (passOpt.numChars) {
-    result = result.concat(numericCharacters);
-  };
-
-  if(passOpt.lowercaseChars) {
-    result = result.concat(lowerCasedCharacters);
-  };
-
-  if(passOpt.uppercaseChars) {
-    result = result.concat(upperCasedCharacters);
-  };
-
-  var string = result.sort(() => .5 - Math.random()).splice(1, arr);
-  return string.join("");
+  
+ 
+  return result.sort(() => .5 - Math.random()).slice(0, arr).join("");
 };
+
 
 // Function to generate password with user input
 function generatePassword() {
