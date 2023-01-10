@@ -92,7 +92,7 @@ var upperCasedCharacters = [
 // Object with all user options.
 var passOpt = {
   // Global scope object1 for how many characters user wants in his password
-  howManyChars: 10,
+  howManyChars: null,
   //Global scope object does user wants include special characters
   specialChars: null,
   // Global scope variable does user wants include numeric characters
@@ -107,12 +107,15 @@ var passOpt = {
 
 // Function to prompt user for password options
 var getPasswordOptions = function () {
+  // reset result variable to empty array;
+  result = [];
   //Local variable for many characters password user wants
   var howMany = prompt("How many character would you like your password to containt?");
   // Validation how many characters input
   if (howMany < 10 || howMany > 64) {
     alert("Please choose password character between 10 and 64");
-    return;
+    // To stop function.
+    return false;
   } else {
     passOpt.howManyChars = howMany;
   };
@@ -156,46 +159,49 @@ var getPasswordOptions = function () {
     passOpt.uppercaseChars = false;
   };
 
-  // Validation that user will pick atleast one of the options.
-  if (passOpt.specialChars === false && passOpt.numChars === false && passOpt.lowercaseChars === false && passOpt.uppercaseChars === false) {
-    alert("Please choose atleast one of the options.")
-
-    // Loop witch puts back all of the values to null.
-    for (var x in passOpt) {
-      passOpt[x] = null;
-    };
-  };
+  
 };
-
+// Array to keep user option array elements
 var result = [];
-var arrayLength = result.join(numericCharacters + "" + result);
 
 // Function for getting a random element from an array
 function getRandom(arr) {
-  // Array to keep user option array elements
- 
-  // Validation what user wants.
 
+  // Validation what user wants.
+  // LOOP if the user wants 64 characters to run over and over again
   do {
+    // Validation that user will pick atleast one of the options.
+  if (passOpt.specialChars === false && passOpt.numChars === false && passOpt.lowercaseChars === false && passOpt.uppercaseChars === false) {
+    alert("Please choose atleast one of the options.")
+    // to stop function.
+
+    break;
+  };
+    if (passOpt.howManyChars === null) {
+      break;
+    };
     if (passOpt.specialChars) {
+      // Cocant consolidate array
       result = result.concat(specialCharacters);
     };
     if (passOpt.numChars) {
+      // destructuring assignment array
       result = [...result, ...numericCharacters];
     };
     if (passOpt.lowercaseChars) {
       result = result.concat(lowerCasedCharacters);
     };
     if (passOpt.uppercaseChars) {
-      result = result.concat(upperCasedCharacters);
+      result = [...result, ...upperCasedCharacters];
     };
-  } while (arr <= result.length);
+    // Check while result variable is more then user wanted characters.
+  } while (arr >= result.length);
 
-  
- 
+
+  // function that takes an array mix it up and return as a string.
   return result.sort(() => .5 - Math.random()).slice(0, arr).join("");
 };
-
+var test;
 
 // Function to generate password with user input
 function generatePassword() {
