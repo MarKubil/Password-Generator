@@ -1,4 +1,4 @@
-# Console-Finances
+# PASSWORD GENERATOR
 
 
 ## Description
