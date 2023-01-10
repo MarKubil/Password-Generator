@@ -201,7 +201,7 @@ function getRandom(arr) {
   // function that takes an array mix it up and return as a string.
   return result.sort(() => .5 - Math.random()).slice(0, arr).join("");
 };
-var test;
+
 
 // Function to generate password with user input
 function generatePassword() {
